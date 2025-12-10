@@ -1,0 +1,24 @@
+extends Sprite2D
+
+@onready var audio: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var audio_activate: AudioStream = preload("res://sound-effecs/lever-01.wav")
+@onready var audio_deactivate: AudioStream = preload("res://sound-effecs/lever-01.wav")
+
+func pressed():
+	frame = 26
+	owner.push_rune(get_index())
+	play_audio(audio_activate)
+
+func unpressed():
+	frame = 27
+
+func _on_player_entered(body):
+	pressed()
+	play_audio(audio_deactivate)
+
+func _on_player_exited(body):
+	unpressed()
+
+func play_audio(_stream: AudioStream) -> void:
+	audio.stream = _stream
+	audio.play()
